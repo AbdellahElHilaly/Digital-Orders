@@ -9,9 +9,12 @@ import java.util.UUID;
 public interface UserService {
 
     public User save(User user);
-    public User findById(UUID id);
+    public User findByIdOrThrow(UUID id);
+    public User findByEmailOrThrow(String email);
     public void deleteById(UUID id);
     public User update(UUID id, User user);
     public List<User> findAll();
+    void login(String email, String password);
+    void logout(String email);
 
 }

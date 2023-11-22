@@ -72,9 +72,6 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ErrorSimpleResponse> handleDataIntegrityViolationException(
             DataIntegrityViolationException exception, HttpServletRequest request) {
 
-
-
-
         errorSimpleResponse.setTimestamp(LocalDateTime.now());
         errorSimpleResponse.setMessage("Data Integrity Violation");
         errorSimpleResponse.setDetails(Arrays.asList(exception.getMessage().split(";")));
