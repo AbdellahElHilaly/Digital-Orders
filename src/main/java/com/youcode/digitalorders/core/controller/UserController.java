@@ -26,12 +26,32 @@ public class UserController {
 
     @GetMapping("/{id}")
     public User selectById(@PathVariable UUID id) {
-        return userService.findById(id);
+        return userService.findByIdOrThrow(id);
     }
 
     @PostMapping
     public User insert(@RequestBody @Valid  UserDto userDto) {
         return userService.save(userDto.toEntity());
+    }
+
+    @PutMapping("/{id}")
+    public User update(@RequestBody @Valid UserDto userDto, @PathVariable UUID id) {
+        return userService.update(id, userDto.toEntity());
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteById(@PathVariable UUID id) {
+        userService.deleteById(id);
+    }
+
+    @PostMapping("/login")
+    public void login(@RequestParam String email, @RequestParam String password) {
+        userService.login(email, password);
+    }
+
+    @PostMapping("/logout")
+    public void logout(@RequestParam String email) {
+        userService.logout(email);
     }
 
 
