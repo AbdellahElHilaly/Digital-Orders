@@ -1,7 +1,6 @@
 package com.youcode.digitalorders.core.dao.model.entity;
 
 import com.youcode.digitalorders.core.dao.model.dto.UserDto;
-import com.youcode.digitalorders.shared.Enum.UserRoles;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
