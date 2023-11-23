@@ -24,4 +24,3 @@ public class Contrat {
     @JoinColumn
     private Devis devis;
 }
-

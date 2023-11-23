@@ -1,10 +1,7 @@
 package com.youcode.digitalorders.core.dao.model.entity;
 
 import com.youcode.digitalorders.core.dao.model.dto.UserDto;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.UUID;
@@ -29,10 +26,10 @@ public class User {
 
     private String password;
 
-    @Column(nullable = false, columnDefinition = "BOOLEAN DEFAULT false")
+    @Column(name = "is_authenticated", columnDefinition = "BOOLEAN DEFAULT false")
     private Boolean isAuthenticated;
 
-    @Column(nullable = false, columnDefinition = "VARCHAR(255) DEFAULT 'USER'")
+    @Column(columnDefinition = "VARCHAR(255) DEFAULT 'USER'")
     private String role;
 
     public UserDto toDto() {
@@ -43,4 +40,3 @@ public class User {
                 .build();
     }
 }
-
