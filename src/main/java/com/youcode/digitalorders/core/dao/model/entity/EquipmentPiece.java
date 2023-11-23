@@ -17,8 +17,8 @@ public class EquipmentPiece {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    private UUID UUID;
-    private String status;
+    private UUID UUID;  // equipment identifier
+    private String status; // available or not
     private double price;
     private String picture;
 
