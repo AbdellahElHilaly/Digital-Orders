@@ -9,7 +9,6 @@ import lombok.*;
 @Builder
 @ToString
 @Getter
-@Setter
 @Entity
 @Table(name = "equipment")
 public class Equipment {
