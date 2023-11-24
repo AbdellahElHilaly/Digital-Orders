@@ -4,6 +4,5 @@ public enum DemandeStatus {
     IN_REVIEW,
     ACCEPTED,
     REJECTED,
-    PENDING,
-
+    PENDING
 }

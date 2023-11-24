@@ -4,6 +4,7 @@ import com.youcode.digitalorders.shared.Enum.DemandeStatus;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -20,6 +21,11 @@ public class Demand {
     @GeneratedValue(generator = "uuid2")
     private UUID id;
 
+    @Column(name = "start_date")
+    private Date startDate;
+    @Column(name = "end_date")
+    private Date endDate;
+
     private Double price;
     @Column(columnDefinition = "VARCHAR(255) DEFAULT 'PENDING'")
     private DemandeStatus status;
@@ -31,6 +37,7 @@ public class Demand {
     private EquipmentPiece equipmentPiece;
 
     @OneToMany
+    @JoinTable(name = "demande_devis_list")
     @ToString.Exclude
     private List<Devis> devisList;
 
