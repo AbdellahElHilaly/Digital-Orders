@@ -3,7 +3,12 @@ package com.youcode.digitalorders;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
 @SpringBootApplication
+@ComponentScan(basePackages = {"com.youcode.digitalorders", "external.services.firebase"})
 public class DigitalOrdersApplication {
 
 	public static void main(String[] args) {

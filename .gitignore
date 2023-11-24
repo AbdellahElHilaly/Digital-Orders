@@ -31,3 +31,9 @@ build/
 
 ### VS Code ###
 .vscode/
+
+
+### Firebase ###
+src/main/java/external/services/firebase/utils/resources/serviceAccountKey.json
+src/main/java/external/services/firebase/utils/config/Const/Constants.java
+

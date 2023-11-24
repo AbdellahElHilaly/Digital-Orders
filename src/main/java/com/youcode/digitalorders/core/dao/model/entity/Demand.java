@@ -1,5 +1,6 @@
 package com.youcode.digitalorders.core.dao.model.entity;
 
+import com.youcode.digitalorders.core.dao.model.dto.DemandDto;
 import com.youcode.digitalorders.shared.Enum.DemandeStatus;
 import jakarta.persistence.*;
 import lombok.*;
@@ -40,5 +41,15 @@ public class Demand {
     @JoinTable(name = "demande_devis_list")
     @ToString.Exclude
     private List<Devis> devisList;
+
+
+    public DemandDto toDto(){
+        return DemandDto.builder()
+                .startDate(startDate)
+                .endDate(endDate)
+                .userId(user.getId())
+                .equipmentPieceId(equipmentPiece.getId())
+                .build();
+    }
 
 }
