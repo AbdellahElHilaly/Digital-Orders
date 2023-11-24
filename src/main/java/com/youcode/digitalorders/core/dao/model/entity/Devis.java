@@ -15,7 +15,7 @@ import java.util.List;
 public class Devis {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
 
     private double description;
     private String status;
