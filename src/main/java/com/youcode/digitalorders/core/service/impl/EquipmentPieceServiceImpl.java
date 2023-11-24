@@ -19,13 +19,14 @@ public class EquipmentPieceServiceImpl implements EquipmentPieceService {
 
 
     @Override
-    public void createPieces(Long equipmentId) {
+    public void createPieces(Long equipmentId , double price) {
         Equipment equipment = equipmentRepository.findById(equipmentId).orElseThrow(() -> new EntityNotFoundException("Equipment not found"));
         //this is gonna create the equipment rows
         for(int i = 0; i < equipment.getQuantity() ; i++){
             EquipmentPiece newEquipmentPiece = new EquipmentPiece();
             newEquipmentPiece.setEquipment(equipment);
             newEquipmentPiece.setUUID(generateUUID());
+            newEquipmentPiece.setPrice(price);
             equipmentPieceRepository.save(newEquipmentPiece);
         }
 

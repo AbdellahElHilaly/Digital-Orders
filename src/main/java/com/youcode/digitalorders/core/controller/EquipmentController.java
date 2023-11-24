@@ -47,7 +47,7 @@ public class EquipmentController {
 
 
     @PostMapping("/addEquipment")
-    public ResponseEntity<Equipment> add(@RequestParam String equipment_name, @RequestParam String description , @RequestParam int quantity) {
+    public ResponseEntity<Equipment> add(@RequestParam String equipment_name, @RequestParam String description , @RequestParam int quantity , @RequestParam double price) {
         try {
 //TODO : get the data from a form with http request
             Equipment equipment = Equipment.builder()
@@ -57,7 +57,8 @@ public class EquipmentController {
                     .build();
 
             Equipment savedEquipment = equipmentService.addEquipment(equipment);
-            equipmentPieceService.createPieces(convertToLong(equipment.getId()));
+            equipmentPieceService.createPieces(convertToLong(equipment.getId()) , price );
+//            equipmentPieceService.setPr
             return ResponseEntity.ok(savedEquipment);
 
         } catch (Exception e) {
