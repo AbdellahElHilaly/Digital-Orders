@@ -7,6 +7,7 @@ import com.google.cloud.storage.BlobId;
 import com.google.cloud.storage.Storage;
 import com.google.cloud.storage.StorageOptions;
 import external.services.firebase.files.service.FileStoreService;
+import external.services.firebase.utils.config.Const.Constants;
 import external.services.firebase.utils.helper.FilesManager;
 import external.services.firebase.utils.helper.ResponseHandler;
 import lombok.AllArgsConstructor;
@@ -49,12 +50,12 @@ public class FileStorageServiceImpl implements FileStoreService {
     @Override
     public Object download(String fileName) throws IOException {
         String destFileName = UUID.randomUUID().toString().concat(filesManager.getExtension(fileName));     // to set random strinh for destination file name
-        String destFilePath = "Z:\\New folder\\" + destFileName;                                    // to set destination file path
+        String destFilePath = Constants.DOWNLOAD_PATH + destFileName;                                         // to set destination file path
 
         ////////////////////////////////   Download  ////////////////////////////////////////////////////////////////////////
-        Credentials credentials = GoogleCredentials.fromStream(new FileInputStream("path of JSON with genarated private key"));
+        Credentials credentials = GoogleCredentials.fromStream(new FileInputStream(Constants.SERVICE_ACCOUNT_KEY_PATH));
         Storage storage = StorageOptions.newBuilder().setCredentials(credentials).build().getService();
-        Blob blob = storage.get(BlobId.of("your bucket name", fileName));
+        Blob blob = storage.get(BlobId.of(Constants.BUCKET_NAME, fileName));
         blob.downloadTo(Paths.get(destFilePath));
         return responseHandler.sendResponse("200", "Successfully Downloaded!");
     }
