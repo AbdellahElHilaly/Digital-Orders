@@ -7,7 +7,8 @@ import lombok.*;
 @NoArgsConstructor
 @Builder
 @ToString
-@Data
+@Getter
+@Setter
 @Entity
 @Table(name = "equipment")
 public class Equipment {

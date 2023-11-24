@@ -9,7 +9,8 @@ import java.util.UUID;
 @NoArgsConstructor
 @Builder
 @ToString
-@Data
+@Getter
+@Setter
 @Entity
 @Table(name = "equipment_piece")
 public class EquipmentPiece {
