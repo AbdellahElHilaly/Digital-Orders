@@ -16,7 +16,7 @@ import java.util.UUID;
 public class EquipmentPiece {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
 
     private UUID UUID;  // equipment identifier
     private String status; // available or not
