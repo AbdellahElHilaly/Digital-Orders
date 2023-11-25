@@ -8,5 +8,6 @@ public class AppEndpoints {
     private static final  String VERSION = VERSION_1;
 
     public static final  String USER_ENDPOINT = VERSION + "/users";
+    public static final  String Contrat_ENDPOINT = VERSION + "/contrats";
 
 }

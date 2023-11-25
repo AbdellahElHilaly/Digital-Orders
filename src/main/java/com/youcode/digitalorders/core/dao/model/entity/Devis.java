@@ -20,4 +20,8 @@ public class Devis {
     private double description;
     private String status;
 
+    @ManyToOne
+    @JoinColumn
+    private Demand demand;
+
 }
