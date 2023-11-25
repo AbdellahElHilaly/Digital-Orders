@@ -54,11 +54,12 @@ public class EquipmentController {
                     .name(equipment_name)
                     .description(description)
                     .Quantity(quantity)
+                    .price(price)
                     .build();
 
             Equipment savedEquipment = equipmentService.addEquipment(equipment);
+            //if
             equipmentPieceService.createPieces(convertToLong(equipment.getId()) , price );
-//            equipmentPieceService.setPr
             return ResponseEntity.ok(savedEquipment);
 
         } catch (Exception e) {

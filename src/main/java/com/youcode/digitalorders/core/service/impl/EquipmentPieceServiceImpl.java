@@ -32,6 +32,11 @@ public class EquipmentPieceServiceImpl implements EquipmentPieceService {
 
     }
 
+    @Override
+    public void updatePieces(Long equipmentId, double price) {
+
+    }
+
 
     public static UUID generateUUID() {
         UUID uuid = UUID.randomUUID();
