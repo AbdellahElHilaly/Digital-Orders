@@ -3,11 +3,13 @@ package com.youcode.digitalorders.core.controller;
 import com.youcode.digitalorders.core.dao.model.entity.Equipment;
 import com.youcode.digitalorders.core.service.EquipmentPieceService;
 import com.youcode.digitalorders.core.service.EquipmentService;
+import com.youcode.digitalorders.core.service.PdfGenerationService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 import java.util.Optional;
@@ -18,6 +20,13 @@ public class EquipmentController {
     @Autowired
     private final EquipmentService equipmentService;
     private final EquipmentPieceService equipmentPieceService;
+
+
+    private final PdfGenerationService pdfGenerationService;
+
+//    public PdfController(PdfGenerationService pdfGenerationService) {
+//        this.pdfGenerationService = pdfGenerationService;
+//    }
 
 //    @Autowired
 //    public EquipmentController(EquipmentService equipmentService) {
@@ -92,9 +101,29 @@ public class EquipmentController {
                     .body("Failed to delete equipment with ID " + id + ": " + e.getMessage());
         }
     }
+
+
+
+    //this is jsut for tet , this end point is gonna be used in the contract and devis parts
+
+    @PostMapping("/getPdf")
+    public ResponseEntity<?> getPdf() {
+        try {
+            RestTemplate restTemplate = new RestTemplate();
+            Optional<Equipment> eq = equipmentService.selectById(convertToLong(1)); // Assuming equipmentService is available
+            pdfGenerationService.generatePdfFromDatabaseObject(eq, restTemplate);
+            // You might want to handle the response or return something meaningful here
+            return ResponseEntity.ok("PDF generation initiated");
+        }catch(Exception e){
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+
+    }
+
     public  Long convertToLong(int value){
         Long longvalue = (long) value;
         return longvalue;
     }
+
 
 }

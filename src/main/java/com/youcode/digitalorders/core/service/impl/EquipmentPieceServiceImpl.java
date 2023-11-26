@@ -38,6 +38,7 @@ public class EquipmentPieceServiceImpl implements EquipmentPieceService {
     }
 
 
+
     public static UUID generateUUID() {
         UUID uuid = UUID.randomUUID();
         return uuid;
