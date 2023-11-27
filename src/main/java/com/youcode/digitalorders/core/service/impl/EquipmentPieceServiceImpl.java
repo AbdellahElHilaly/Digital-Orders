@@ -9,6 +9,8 @@ import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 import java.util.UUID;
 @AllArgsConstructor
 @Service
@@ -30,6 +32,17 @@ public class EquipmentPieceServiceImpl implements EquipmentPieceService {
             equipmentPieceRepository.save(newEquipmentPiece);
         }
 
+    }
+
+    @Override
+    public void updatePieces(Long equipmentId, double price) {
+
+    }
+
+    @Override
+    public Optional<EquipmentPiece> findPiecesByEquipmentId(Long equipmentId) {
+
+        return Optional.of(equipmentPieceRepository.findById(equipmentId)).orElseThrow(() -> new EntityNotFoundException("Equipment not found"));
     }
 
 

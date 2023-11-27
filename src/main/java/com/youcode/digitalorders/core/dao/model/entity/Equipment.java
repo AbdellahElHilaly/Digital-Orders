@@ -8,7 +8,7 @@ import lombok.*;
 @NoArgsConstructor
 @Builder
 @ToString
-@Getter
+@Data
 @Entity
 @Table(name = "equipment")
 public class Equipment {
@@ -19,6 +19,12 @@ public class Equipment {
     private String name;
     private String description;
 
+    //default price
+    private double price ;
+
     @Transient
     private int Quantity ;
+
+
+
 }

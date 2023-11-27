@@ -28,11 +28,21 @@ public class EquipmentServiceImpl implements EquipmentService {
 
     @Override
     public Equipment addEquipment(Equipment equipment) {
-        try {
-            return equipmentRepository.save(equipment);
-        } catch (Exception e) {
-            // Log or handle the exception appropriately
+        // Check if equipment with the same name already exists
+        Optional<Equipment> existingEquipment = equipmentRepository.findByName(equipment.getName());
+
+        if (existingEquipment.isPresent()) {
+            // Equipment with the same name exists, return null or handle the situation
+
             return null;
+        } else {
+            try {
+                // Save the equipment since it doesn't exist
+                return equipmentRepository.save(equipment);
+            } catch (Exception e) {
+                // Log or handle the exception appropriately
+                return null;
+            }
         }
     }
 
