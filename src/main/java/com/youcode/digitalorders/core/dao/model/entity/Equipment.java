@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 @AllArgsConstructor
+@Setter
 @NoArgsConstructor
 @Builder
 @ToString
@@ -18,4 +19,13 @@ public class Equipment {
 
     private String name;
     private String description;
+
+    //default price
+    private double price ;
+
+    @Transient
+    private int Quantity ;
+
+
+
 }
