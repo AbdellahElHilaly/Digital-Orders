@@ -8,5 +8,6 @@ public class AppEndpoints {
     public static final  String USER_ENDPOINT = VERSION + "/users";
     public static final  String DEMAND_ENDPOINT = VERSION + "/demands";
     public static final  String FIREBASE_ENDPOINT = VERSION + "/firebase";
+    public static final  String DEVIS_ENDPOINT = VERSION + "/devis";
 
 }
