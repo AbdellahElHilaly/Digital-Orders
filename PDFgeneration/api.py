@@ -3,7 +3,6 @@ from fpdf import FPDF
 import json
 
 app = Flask(__name__)
-
 @app.route('/generate_pdf', methods=['POST'])
 def generate_pdf():
     try:
@@ -26,3 +25,4 @@ def generate_pdf():
 
 if __name__ == '__main__':
     app.run(debug=True)
+
