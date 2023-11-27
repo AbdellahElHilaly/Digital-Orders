@@ -5,6 +5,7 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.Builder;
+import org.springframework.format.annotation.NumberFormat;
 
 @Builder
 public class UserDto {
