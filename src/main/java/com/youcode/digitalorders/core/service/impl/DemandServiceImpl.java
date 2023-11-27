@@ -1,13 +1,20 @@
 package com.youcode.digitalorders.core.service.impl;
 
+import com.youcode.digitalorders.core.dao.model.dto.DemandDto;
 import com.youcode.digitalorders.core.dao.model.entity.Demand;
+import com.youcode.digitalorders.core.dao.model.entity.EquipmentPiece;
 import com.youcode.digitalorders.core.dao.repository.DemandRepository;
 import com.youcode.digitalorders.core.service.DemandService;
 import com.youcode.digitalorders.core.service.EquipmentPieceService;
+import com.youcode.digitalorders.core.service.EquipmentService;
 import com.youcode.digitalorders.core.service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.UUID;
 
 @Service
 @AllArgsConstructor(onConstructor = @__(@Autowired))
@@ -16,10 +23,54 @@ public class DemandServiceImpl implements DemandService {
     private final UserService userService;
     private final DemandRepository demandRepository;
     private final EquipmentPieceService equipmentPieceService;
+    private final EquipmentService equipmentService;
+
     @Override
     public Demand create(Demand demand) {
         demand.setUser(userService.findByIdOrThrow(demand.getUser().getId()));
-        demand.setEquipmentPiece(equipmentPieceService.findPiecesByEquipmentId(demand.getEquipmentPiece().getId()).orElseThrow());
-        return demandRepository.save(demand);
+
+        demand.setEquipment(equipmentService.selectById(demand.getEquipment().getId())
+                .orElseThrow(() -> new NoSuchElementException("No equipment found with id: " + demand.getEquipment().getId())));
+
+        List<EquipmentPiece> equipmentPieceListValidated = selectValidatedDemandsOrTrow(demand);
+
+//        return demandRepository.save(demand);
+
+        return demand;
     }
+
+    @Override
+    public List<Demand> selectAll() {
+        return demandRepository.findAll();
+    }
+
+    @Override
+    public Demand findById(UUID id) {
+        return demandRepository.findById(id).orElseThrow(() -> new NoSuchElementException(
+                "No demand found with id: " + id
+        ));
+    }
+
+    @Override
+    public List<EquipmentPiece> selectValidatedDemandsOrTrow(Demand demand) {
+
+        List<EquipmentPiece> equipmentPieces = equipmentPieceService.getAvailablePieces(
+                demand.getEquipment().getId(), demand.getStartDate(), demand.getEndDate(), demand.getQuantity()
+        );
+
+        if(equipmentPieces == null || equipmentPieces.isEmpty()) {
+            throw new NoSuchElementException("No equipment pieces available");
+        }
+
+        if (equipmentPieces.size() < demand.getQuantity()) {
+            throw new NoSuchElementException("Sorry, now we have only " + equipmentPieces.size() + " pieces available");
+        }
+
+        return equipmentPieces;
+
+    }
+
+
 }
+
+

@@ -8,8 +8,12 @@ import com.youcode.digitalorders.core.service.EquipmentPieceService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 @AllArgsConstructor
@@ -41,8 +45,12 @@ public class EquipmentPieceServiceImpl implements EquipmentPieceService {
 
     @Override
     public Optional<EquipmentPiece> findPiecesByEquipmentId(Long equipmentId) {
-
         return Optional.of(equipmentPieceRepository.findById(equipmentId)).orElseThrow(() -> new EntityNotFoundException("Equipment not found"));
+    }
+
+    public List<EquipmentPiece> getAvailablePieces(Long equipmentId, Date reservationStartDate, Date reservationEndDate, int quantity) {
+        Pageable pageable = PageRequest.of(0, quantity);
+        return equipmentPieceRepository.findAvailablePieces(equipmentId, reservationStartDate, reservationEndDate, pageable);
     }
 
 
