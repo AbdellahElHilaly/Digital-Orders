@@ -68,7 +68,7 @@ public class EquipmentController {
 
             Equipment savedEquipment = equipmentService.addEquipment(equipment);
             //if
-            equipmentPieceService.createPieces(convertToLong(equipment.getId()) , price );
+            equipmentPieceService.createPieces(equipment.getId() , price );
             return ResponseEntity.ok(savedEquipment);
 
         } catch (Exception e) {
@@ -107,10 +107,10 @@ public class EquipmentController {
     //this is jsut for tet , this end point is gonna be used in the contract and devis parts
 
     @PostMapping("/getPdf/{id}")
-    public ResponseEntity<?> getPdf(  @PathVariable("id") int id) {
+    public ResponseEntity<?> getPdf(  @PathVariable("id") Long id) {
         try {
             RestTemplate restTemplate = new RestTemplate();
-            Optional<Equipment> eq = equipmentService.selectById(convertToLong(id)); // Assuming equipmentService is available
+            Optional<Equipment> eq = equipmentService.selectById(id); // Assuming equipmentService is available
             pdfGenerationService.generatePdfFromDatabaseObject(eq, restTemplate);
             // You might want to handle the response or return something meaningful here
             return ResponseEntity.ok("PDF generation initiated");
@@ -120,10 +120,6 @@ public class EquipmentController {
 
     }
 
-    public  Long convertToLong(int value){
-        Long longvalue = (long) value;
-        return longvalue;
-    }
 
 
 }
