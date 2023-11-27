@@ -9,13 +9,14 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Builder
 @ToString
-@Data
+@Getter
+@Setter
 @Entity
 @Table(name = "contrat")
 public class Contrat {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
 
     private LocalDateTime accepted_at;
     private String status;

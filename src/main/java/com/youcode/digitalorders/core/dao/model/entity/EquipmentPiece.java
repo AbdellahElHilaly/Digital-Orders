@@ -9,16 +9,17 @@ import java.util.UUID;
 @NoArgsConstructor
 @Builder
 @ToString
-@Data
+@Getter
+@Setter
 @Entity
 @Table(name = "equipment_piece")
 public class EquipmentPiece {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
 
-    private UUID UUID;
-    private String status;
+    private UUID UUID;  // equipment identifier
+    private String status; // available or not
     private double price;
     private String picture;
 

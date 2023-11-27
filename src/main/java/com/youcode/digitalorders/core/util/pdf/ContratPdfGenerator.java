@@ -7,9 +7,6 @@ import com.lowagie.text.pdf.PdfPCell;
 import com.lowagie.text.pdf.PdfPTable;
 import com.lowagie.text.pdf.PdfWriter;
 import com.youcode.digitalorders.core.dao.model.entity.Contrat;
-import com.youcode.digitalorders.core.dao.model.entity.DemandDetail;
-import com.youcode.digitalorders.core.dao.model.entity.EquipmentPiece;
-import com.youcode.digitalorders.core.dao.model.entity.User;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
@@ -52,20 +49,20 @@ public class ContratPdfGenerator {
         cell.setPhrase(new Phrase("Price", headerFont));
         table.addCell(cell);
 
-        for (Contrat contrat : contratList) {
-            User user = contrat.getDevis().getDemand().getUser();
-            List<DemandDetail> demandDetails = contrat.getDevis().getDemand().getDemandDetails();
-
-            for (DemandDetail demandDetail : demandDetails) {
-                EquipmentPiece equipmentPiece = demandDetail.getEquipmentPiece();
-
-                table.addCell(String.valueOf(contrat.getId()));
-                table.addCell(user.getName());
-                table.addCell(equipmentPiece.getUUID().toString());
-                table.addCell(equipmentPiece.getEquipment().getName());
-                table.addCell(String.valueOf(equipmentPiece.getPrice()));
-            }
-        }
+//        for (Contrat contrat : contratList) {
+//            User user =
+//            List<DemandDetail> demandDetails = contrat.getDevis().getDemand().getDemandDetails();
+//
+//            for (DemandDetail demandDetail : demandDetails) {
+//                EquipmentPiece equipmentPiece = demandDetail.getEquipmentPiece();
+//
+//                table.addCell(String.valueOf(contrat.getId()));
+//                table.addCell(user.getName());
+//                table.addCell(equipmentPiece.getUUID().toString());
+//                table.addCell(equipmentPiece.getEquipment().getName());
+//                table.addCell(String.valueOf(equipmentPiece.getPrice()));
+//            }
+//        }
 
         document.add(table);
         document.close();

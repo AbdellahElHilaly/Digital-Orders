@@ -1,32 +1,55 @@
 package com.youcode.digitalorders.core.dao.model.entity;
 
+import com.youcode.digitalorders.core.dao.model.dto.DemandDto;
+import com.youcode.digitalorders.shared.Enum.DemandeStatus;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
 @ToString
-@Data
+@Getter
+@Setter
 @Entity
 @Table(name = "demande")
 public class Demand {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    @GeneratedValue(generator = "uuid2")
+    private UUID id;
 
-    private double price;
-    private String status;
+    @Column(name = "start_date")
+    private Date startDate;
+    @Column(name = "end_date")
+    private Date endDate;
 
-    @OneToMany
-    private List<DemandDetail> demandDetails;
+    private Double price;
+    @Column(columnDefinition = "VARCHAR(255) DEFAULT 'PENDING'")
+    private DemandeStatus status;
 
     @ManyToOne
-    @JoinColumn
     private User user;
 
+    @ManyToOne
+    private EquipmentPiece equipmentPiece;
+
     @OneToMany
+    @JoinTable(name = "demande_devis_list")
+    @ToString.Exclude
     private List<Devis> devisList;
+
+
+    public DemandDto toDto(){
+        return DemandDto.builder()
+                .startDate(startDate)
+                .endDate(endDate)
+                .userId(user.getId())
+                .equipmentPieceId(equipmentPiece.getId())
+                .build();
+    }
+
 }

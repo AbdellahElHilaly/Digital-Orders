@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 @AllArgsConstructor
+@Setter
 @NoArgsConstructor
 @Builder
 @ToString
@@ -13,8 +14,17 @@ import lombok.*;
 public class Equipment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
 
     private String name;
     private String description;
+
+    //default price
+    private double price ;
+
+    @Transient
+    private int Quantity ;
+
+
+
 }
