@@ -106,11 +106,11 @@ public class EquipmentController {
 
     //this is jsut for tet , this end point is gonna be used in the contract and devis parts
 
-    @PostMapping("/getPdf")
-    public ResponseEntity<?> getPdf() {
+    @PostMapping("/getPdf/{id}")
+    public ResponseEntity<?> getPdf(  @PathVariable("id") int id) {
         try {
             RestTemplate restTemplate = new RestTemplate();
-            Optional<Equipment> eq = equipmentService.selectById(convertToLong(1)); // Assuming equipmentService is available
+            Optional<Equipment> eq = equipmentService.selectById(convertToLong(id)); // Assuming equipmentService is available
             pdfGenerationService.generatePdfFromDatabaseObject(eq, restTemplate);
             // You might want to handle the response or return something meaningful here
             return ResponseEntity.ok("PDF generation initiated");
