@@ -57,7 +57,7 @@ public class EquipmentController {
                     .build();
 
             Equipment savedEquipment = equipmentService.addEquipment(equipment);
-            equipmentPieceService.createPieces(convertToLong(equipment.getId()) , price );
+            equipmentPieceService.createPieces(equipment.getId() , price );
 //            equipmentPieceService.setPr
             return ResponseEntity.ok(savedEquipment);
 
@@ -91,9 +91,6 @@ public class EquipmentController {
                     .body("Failed to delete equipment with ID " + id + ": " + e.getMessage());
         }
     }
-    public  Long convertToLong(int value){
-        Long longvalue = (long) value;
-        return longvalue;
-    }
+
 
 }
