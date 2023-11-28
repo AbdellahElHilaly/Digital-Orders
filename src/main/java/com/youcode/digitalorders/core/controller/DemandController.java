@@ -8,10 +8,10 @@ import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.UUID;
 
 import static com.youcode.digitalorders.shared.Const.AppEndpoints.DEMAND_ENDPOINT;
 
@@ -27,8 +27,21 @@ public class DemandController {
         return ResponseEntity.ok(demandService.create(demandDto.toEntity()));
     }
 
+    @GetMapping
+    public ResponseEntity<List<Demand>> selectAll() {
+        return ResponseEntity.ok(demandService.selectAll());
+    }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<Demand> findById(@PathVariable UUID id) {
+        return ResponseEntity.ok(demandService.findById(id));
+    }
 
+    @GetMapping("/user/{id}")
+    public ResponseEntity<List<Demand>> selectAllByUser(@PathVariable UUID id) {
+        return ResponseEntity.ok(demandService.selectAllByUserId(id));
+    }
 
 
 }
+

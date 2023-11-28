@@ -5,9 +5,11 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.Builder;
+import lombok.Data;
+import lombok.Getter;
 import org.springframework.format.annotation.NumberFormat;
 
-@Builder
+@Data
 public class UserDto {
 
     @NotBlank(message = "name should not be blank")
@@ -21,13 +23,6 @@ public class UserDto {
     @Size(min = 8, max = 20, message = "password should be between 8 and 20 characters")
     private String password;
 
-    public User toEntity() {
-        return User.builder()
-                .name(this.name)
-                .email(this.email)
-                .password(this.password)
-                .build();
-    }
 }
 
 
