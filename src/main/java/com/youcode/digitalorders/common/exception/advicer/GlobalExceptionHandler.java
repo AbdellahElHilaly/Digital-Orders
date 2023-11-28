@@ -3,6 +3,10 @@ package com.youcode.digitalorders.common.exception.advicer;
 import com.youcode.digitalorders.common.exception.response.ErrorResponse;
 import com.youcode.digitalorders.common.exception.response.ErrorSimpleResponse;
 import jakarta.servlet.http.HttpServletRequest;
+import lombok.AllArgsConstructor;
+import org.checkerframework.checker.units.qual.A;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
@@ -20,13 +24,14 @@ import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 @RestControllerAdvice
+@AllArgsConstructor(onConstructor = @__(@Autowired))
 public class GlobalExceptionHandler {
 
-    @Autowired
-    private ErrorResponse errorResponse;
+    private final ErrorResponse errorResponse;
 
-    @Autowired
-    private ErrorSimpleResponse errorSimpleResponse;
+    private final ErrorSimpleResponse errorSimpleResponse;
+
+    private  final Logger logger = LoggerFactory.getLogger(GlobalExceptionHandler.class);
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ErrorResponse> handleValidationException(
@@ -77,10 +82,13 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ErrorSimpleResponse> handleException(
             Exception exception, HttpServletRequest request) {
 
+        logger.error("Exception occurred", exception);
+
         errorSimpleResponse.setTimestamp(LocalDateTime.now());
         errorSimpleResponse.setMessage("Internal Server Error");
         errorSimpleResponse.setDetails(Collections.singletonList(exception.getMessage()));
         errorSimpleResponse.setPath(request.getRequestURI());
+
 
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorSimpleResponse);
     }

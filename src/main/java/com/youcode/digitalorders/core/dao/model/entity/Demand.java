@@ -1,7 +1,6 @@
 package com.youcode.digitalorders.core.dao.model.entity;
 
 import com.youcode.digitalorders.core.dao.model.dto.DemandDto;
-import com.youcode.digitalorders.shared.Enum.DemandeStatus;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -24,31 +23,42 @@ public class Demand {
 
     @Column(name = "start_date")
     private Date startDate;
+
     @Column(name = "end_date")
     private Date endDate;
 
     private Double price;
-    @Column(columnDefinition = "VARCHAR(255) DEFAULT 'PENDING'")
-    private DemandeStatus status;
 
-    @ManyToOne
+    private Integer quantity;
+
+    @Column(columnDefinition = "VARCHAR(255) DEFAULT 'PENDING'")
+    private String status;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "user_id")
     private User user;
 
-    @ManyToOne
-    private EquipmentPiece equipmentPiece;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "equipment_id")
+    private Equipment equipment;
+
+
 
     @OneToMany
-    @JoinTable(name = "demande_devis_list")
+    @JoinTable(name = "demande_devis_list",
+            joinColumns = @JoinColumn(name = "demand_id"),
+            inverseJoinColumns = @JoinColumn(name = "devis_list_id"))
     @ToString.Exclude
     private List<Devis> devisList;
-
 
     public DemandDto toDto(){
         return DemandDto.builder()
                 .startDate(startDate)
                 .endDate(endDate)
                 .userId(user.getId())
-                .equipmentPieceId(equipmentPiece.getId())
+                .quantity(quantity)
+//                .equipmentPieceId(equipmentPiece.getId())
+                .equipmentId(equipment.getId())
                 .build();
     }
 

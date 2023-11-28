@@ -2,6 +2,8 @@ package com.youcode.digitalorders.core.service;
 
 import com.youcode.digitalorders.core.dao.model.entity.EquipmentPiece;
 
+import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 public interface EquipmentPieceService {
@@ -10,10 +12,9 @@ public interface EquipmentPieceService {
     void updatePieces(Long equipmentId , double price);
 
     Optional<EquipmentPiece> findPiecesByEquipmentId(Long equipmentId);
-    //this method should take the equipment id and updates it in the equipment_pieces table
-    //and updates the price in the equipment table
+
+    public List<EquipmentPiece> getAvailablePieces(Long equipmentId, Date reservationStartDate, Date reservationEndDate, int quantity);
 
 
-
-
+    EquipmentPiece update(EquipmentPiece equipmentPiece);
 }
