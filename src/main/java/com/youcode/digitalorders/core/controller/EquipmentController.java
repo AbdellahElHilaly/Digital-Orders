@@ -69,6 +69,7 @@ public class EquipmentController {
             Equipment savedEquipment = equipmentService.addEquipment(equipment);
             //if
             equipmentPieceService.createPieces(equipment.getId() , price );
+            equipmentPieceService.createPieces(equipment.getId() , price );
             return ResponseEntity.ok(savedEquipment);
 
         } catch (Exception e) {
@@ -108,8 +109,10 @@ public class EquipmentController {
 
     @PostMapping("/getPdf/{id}")
     public ResponseEntity<?> getPdf(  @PathVariable("id") Long id) {
+    public ResponseEntity<?> getPdf(  @PathVariable("id") Long id) {
         try {
             RestTemplate restTemplate = new RestTemplate();
+            Optional<Equipment> eq = equipmentService.selectById(id); // Assuming equipmentService is available
             Optional<Equipment> eq = equipmentService.selectById(id); // Assuming equipmentService is available
             pdfGenerationService.generatePdfFromDatabaseObject(eq, restTemplate);
             // You might want to handle the response or return something meaningful here

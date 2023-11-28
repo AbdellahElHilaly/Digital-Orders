@@ -11,6 +11,9 @@ def generate_pdf():
         pdf.add_page()
         pdf.set_font("Arial", size=12)
 
+        # Add a logo to the PDF
+        pdf.image('logo.png', x=150, y=10, w=30)  # Change path and dimensions
+
         # Iterate through JSON data and add to PDF
         for key, value in data.items():
             pdf.cell(200, 10, txt=f"{key}: {value}", ln=True)
