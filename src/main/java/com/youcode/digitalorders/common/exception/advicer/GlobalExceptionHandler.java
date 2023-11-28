@@ -6,11 +6,13 @@ import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDateTime;
 import java.util.Arrays;
@@ -83,5 +85,17 @@ public class GlobalExceptionHandler {
         errorSimpleResponse.setPath(request.getRequestURI());
 
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorSimpleResponse);
+    }
+
+    @ExceptionHandler(ResponseStatusException.class)
+    public ResponseEntity<ErrorResponses> handleResponseStatusException(ResponseStatusException ex) {
+        HttpStatusCode status = ex.getStatusCode();
+        String message = ex.getReason();
+
+        ErrorResponses errorResponse = new ErrorResponses(status.value(), message);
+        return ResponseEntity.status(status).body(errorResponse);
+    }
+
+    private record ErrorResponses(int statusCode, String message) {
     }
 }

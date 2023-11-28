@@ -1,22 +1,21 @@
 package com.youcode.digitalorders.core.controller;
 
+import com.youcode.digitalorders.core.dao.model.dto.ContratDto;
 import com.youcode.digitalorders.core.dao.model.entity.Contrat;
 import com.youcode.digitalorders.core.service.ContratService;
 import com.youcode.digitalorders.shared.Const.AppEndpoints;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping(AppEndpoints.Contrat_ENDPOINT)
 @AllArgsConstructor(onConstructor = @__(@Autowired))
-public class ContactController {
+public class ContratController {
 
     private final ContratService contratService;
 
@@ -26,8 +25,8 @@ public class ContactController {
     }
 
     @PostMapping
-    public ResponseEntity<Contrat> addContrat(Contrat contrat) {
-        return ResponseEntity.ok(contratService.addContrat(contrat));
+   public Contrat addContrat(@RequestBody @Valid ContratDto contratDto){
+        return contratService.addContrat(contratDto.toEntity());
     }
 
 }
