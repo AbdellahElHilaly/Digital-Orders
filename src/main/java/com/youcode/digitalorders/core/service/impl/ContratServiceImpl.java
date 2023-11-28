@@ -1,6 +1,5 @@
 package com.youcode.digitalorders.core.service.impl;
 
-import com.lowagie.text.DocumentException;
 import com.youcode.digitalorders.core.dao.model.entity.Contrat;
 import com.youcode.digitalorders.core.dao.model.entity.Devis;
 import com.youcode.digitalorders.core.dao.repository.ContratRepository;
@@ -40,7 +39,6 @@ public class ContratServiceImpl implements ContratService {
 
         validateDevis(contrat.getDevis().getId());
         Contrat savedContrat = contratRepository.save(contrat);
-
 
         return savedContrat;
     }
