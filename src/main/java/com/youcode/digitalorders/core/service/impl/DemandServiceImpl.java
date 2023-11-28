@@ -27,6 +27,7 @@ public class DemandServiceImpl implements DemandService {
 
     @Override
     public Demand create(Demand demand) {
+
         demand.setUser(userService.findByIdOrThrow(demand.getUser().getId()));
 
         demand.setEquipment(equipmentService.selectById(demand.getEquipment().getId())
@@ -34,9 +35,17 @@ public class DemandServiceImpl implements DemandService {
 
         List<EquipmentPiece> equipmentPieceListValidated = selectValidatedDemandsOrTrow(demand);
 
-//        return demandRepository.save(demand);
 
-        return demand;
+
+
+        equipmentPieceListValidated.stream().peek(equipmentPiece -> {
+            equipmentPiece.setReservedDate(demand.getStartDate());
+            equipmentPiece.setReturnDate(demand.getEndDate());
+            equipmentPiece.setStatus("RESERVED");
+        }).forEach(equipmentPieceService::update);
+
+        return demandRepository.save(demand);
+
     }
 
     @Override

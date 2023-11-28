@@ -53,6 +53,17 @@ public class EquipmentPieceServiceImpl implements EquipmentPieceService {
         return equipmentPieceRepository.findAvailablePieces(equipmentId, reservationStartDate, reservationEndDate, pageable);
     }
 
+    @Override
+    public EquipmentPiece update(EquipmentPiece equipmentPiece) {
+        findByIdOrThrow(equipmentPiece.getId());
+        return equipmentPieceRepository.save(equipmentPiece);
+
+    }
+
+    private EquipmentPiece findByIdOrThrow(Long id) {
+        return equipmentPieceRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("The equipment piece with id: " + id + " not found"));
+    }
+
 
     public static UUID generateUUID() {
         UUID uuid = UUID.randomUUID();

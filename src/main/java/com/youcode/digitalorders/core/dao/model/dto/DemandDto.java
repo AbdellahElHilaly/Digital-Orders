@@ -23,9 +23,6 @@ public class DemandDto {
     @NotNull(message = "User ID cannot be null")
     private UUID userId;
 
-//    @NotNull(message = "Equipment Piece ID cannot be null")
-//    private Long equipmentPieceId;
-
     @NotNull(message = "Equipment ID cannot be null")
     private Long equipmentId;
 
@@ -58,7 +55,6 @@ public class DemandDto {
                 .quantity(quantity)
                 .status(DemandeStatus.PENDING.name())
                 .user(User.builder().id(userId).build())
-//                .equipmentPiece(EquipmentPiece.builder().id(equipmentPieceId).build())
                 .equipment(Equipment.builder().id(equipmentId).build())
                 .build();
     }

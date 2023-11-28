@@ -1,5 +1,6 @@
 package com.youcode.digitalorders.core.dao.repository;
 
+import com.youcode.digitalorders.core.dao.model.entity.Equipment;
 import com.youcode.digitalorders.core.dao.model.entity.EquipmentPiece;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -32,9 +33,6 @@ public interface EquipmentPieceRepository extends JpaRepository<EquipmentPiece ,
             @Param("reservationEndDate") Date reservationEndDate,
             Pageable pageable
     );
-
-
-
 
 
 }
