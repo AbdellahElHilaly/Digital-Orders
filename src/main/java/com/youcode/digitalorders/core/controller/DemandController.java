@@ -37,5 +37,11 @@ public class DemandController {
         return ResponseEntity.ok(demandService.findById(id));
     }
 
+    @GetMapping("/user/{id}")
+    public ResponseEntity<List<Demand>> selectAllByUser(@PathVariable UUID id) {
+        return ResponseEntity.ok(demandService.selectAllByUserId(id));
+    }
+
 
 }
+

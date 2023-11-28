@@ -3,7 +3,9 @@ package com.youcode.digitalorders.core.service.impl;
 import com.youcode.digitalorders.core.dao.model.dto.DemandDto;
 import com.youcode.digitalorders.core.dao.model.entity.Demand;
 import com.youcode.digitalorders.core.dao.model.entity.EquipmentPiece;
+import com.youcode.digitalorders.core.dao.model.entity.User;
 import com.youcode.digitalorders.core.dao.repository.DemandRepository;
+import com.youcode.digitalorders.core.dao.repository.UserRepository;
 import com.youcode.digitalorders.core.service.DemandService;
 import com.youcode.digitalorders.core.service.EquipmentPieceService;
 import com.youcode.digitalorders.core.service.EquipmentService;
@@ -77,6 +79,11 @@ public class DemandServiceImpl implements DemandService {
 
         return equipmentPieces;
 
+    }
+
+    @Override
+    public List<Demand> selectAllByUserId(UUID id) {
+        return demandRepository.findAllByUser(userService.findByIdOrThrow(id));
     }
 
 
