@@ -17,6 +17,9 @@ public class Devis {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @ManyToOne
+    @JoinColumn(name = "demand_id")
+    private Demand demand;
     private double description;
     private String status;
 
