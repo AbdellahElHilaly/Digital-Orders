@@ -32,11 +32,4 @@ public class User {
     @Column(columnDefinition = "VARCHAR(255) DEFAULT 'USER'")
     private String role;
 
-    public UserDto toDto() {
-        return UserDto.builder()
-                .name(this.name)
-                .email(this.email)
-                .password(this.password)
-                .build();
-    }
 }
