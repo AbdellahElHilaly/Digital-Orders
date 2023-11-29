@@ -15,6 +15,7 @@ import org.springframework.format.annotation.NumberFormat;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 @Builder
@@ -57,17 +58,6 @@ public class DemandDto {
                 .user(User.builder().id(userId).build())
                 .equipment(Equipment.builder().id(equipmentId).build())
                 .build();
-    }
-
-    @Builder
-    @Data
-    public static class Response {
-        private String userName;
-        private String equipmentPieceName;
-        private Date startDate;
-        private Date endDate;
-        private Double price;
-        private DemandeStatus status;
     }
 
 }

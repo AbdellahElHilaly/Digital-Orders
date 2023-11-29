@@ -15,6 +15,5 @@ public interface EquipmentPieceService {
 
     public List<EquipmentPiece> getAvailablePieces(Long equipmentId, Date reservationStartDate, Date reservationEndDate, int quantity);
 
-
     EquipmentPiece update(EquipmentPiece equipmentPiece);
 }

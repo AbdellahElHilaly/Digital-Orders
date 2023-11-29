@@ -4,6 +4,8 @@ import com.youcode.digitalorders.core.dao.model.dto.UserDto;
 import com.youcode.digitalorders.core.dao.model.entity.User;
 import com.youcode.digitalorders.core.service.UserService;
 import jakarta.validation.Valid;
+import lombok.AllArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,11 +15,12 @@ import java.util.UUID;
 import static com.youcode.digitalorders.shared.Const.AppEndpoints.USER_ENDPOINT;
 
 @RestController
+@AllArgsConstructor(onConstructor = @__(@Autowired))
 @RequestMapping(USER_ENDPOINT)
 public class UserController {
 
-    @Autowired
-    private  UserService userService;
+    private final UserService userService;
+    private final ModelMapper modelMapper;
 
     @GetMapping
     public List<User> selectAll() {
@@ -31,12 +34,12 @@ public class UserController {
 
     @PostMapping
     public User insert(@RequestBody @Valid  UserDto userDto) {
-        return userService.save(userDto.toEntity());
+        return userService.save(modelMapper.map(userDto, User.class));
     }
 
     @PutMapping("/{id}")
     public User update(@RequestBody @Valid UserDto userDto, @PathVariable UUID id) {
-        return userService.update(id, userDto.toEntity());
+        return userService.update(id, modelMapper.map(userDto, User.class));
     }
 
     @DeleteMapping("/{id}")
