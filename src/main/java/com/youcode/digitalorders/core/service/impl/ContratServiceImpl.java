@@ -7,7 +7,6 @@ import com.youcode.digitalorders.core.dao.repository.DevisRepository;
 import com.youcode.digitalorders.core.service.ContratService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -29,7 +28,7 @@ public class ContratServiceImpl implements ContratService {
     public List<Contrat> getAllContrats() {
         List<Contrat> contratList = contratRepository.findAll();
         if (contratList.isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No contrat found");
+            throw new ResponseStatusException(HttpStatus.OK, "No contrat found");
         }
 
         return contratList;
@@ -39,7 +38,6 @@ public class ContratServiceImpl implements ContratService {
     public Contrat addContrat(Contrat contrat) {
 
         validateDevis(contrat.getDevis().getId());
-
         return contratRepository.save(contrat);
     }
 

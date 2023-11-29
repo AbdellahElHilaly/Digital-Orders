@@ -44,10 +44,7 @@ public class Demand {
 
 
 
-    @OneToMany
-    @JoinTable(name = "demande_devis_list",
-            joinColumns = @JoinColumn(name = "demand_id"),
-            inverseJoinColumns = @JoinColumn(name = "devis_list_id"))
+    @OneToMany(mappedBy = "demand")
     @ToString.Exclude
     private List<Devis> devisList;
 

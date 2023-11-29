@@ -17,11 +17,11 @@
         @GeneratedValue(strategy = GenerationType.IDENTITY)
         private Long id;
 
-        private double description;
+        private String description;
         private String status;
 
         @ManyToOne
-        @JoinColumn
+        @JoinColumn(name = "demand_id")
         private Demand demand;
 
     }

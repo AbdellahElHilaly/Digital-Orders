@@ -25,7 +25,8 @@ public class ContratController {
     }
 
     @PostMapping
-   public Contrat addContrat(@RequestBody @Valid ContratDto contratDto){
+    public Contrat addContrat(@RequestBody @Valid ContratDto contratDto) {
+        contratDto.toEntity();
         return contratService.addContrat(contratDto.toEntity());
     }
 
