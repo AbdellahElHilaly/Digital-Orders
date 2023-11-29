@@ -1,5 +1,6 @@
 package com.youcode.digitalorders.core.dao.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -21,5 +22,6 @@ public class Contrat {
 
     @OneToOne
     @JoinColumn
+    @JsonIgnore
     private Devis devis;
 }

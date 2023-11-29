@@ -6,7 +6,7 @@ import com.lowagie.text.pdf.CMYKColor;
 import com.lowagie.text.pdf.PdfPCell;
 import com.lowagie.text.pdf.PdfPTable;
 import com.lowagie.text.pdf.PdfWriter;
-import com.youcode.digitalorders.core.dao.model.entity.Contrat;
+import com.youcode.digitalorders.core.dao.model.entity.*;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
@@ -50,19 +50,19 @@ public class ContratPdfGenerator {
         table.addCell(cell);
 
 //        for (Contrat contrat : contratList) {
-//            User user =
-//            List<DemandDetail> demandDetails = contrat.getDevis().getDemand().getDemandDetails();
+//            User user = contrat.getDevis().getDemand().getUser();
+//            List<Demand> demandList = (List<Demand>) contrat.getDevis().getDemand();
 //
-//            for (DemandDetail demandDetail : demandDetails) {
-//                EquipmentPiece equipmentPiece = demandDetail.getEquipmentPiece();
+//            for (Demand demandDetail : demandList) {
+//                Equipment equipmentPiece = demandDetail.getEquipment();
 //
 //                table.addCell(String.valueOf(contrat.getId()));
 //                table.addCell(user.getName());
-//                table.addCell(equipmentPiece.getUUID().toString());
-//                table.addCell(equipmentPiece.getEquipment().getName());
+//                table.addCell(equipmentPiece.getId().toString());
+//                table.addCell(equipmentPiece.getName());
 //                table.addCell(String.valueOf(equipmentPiece.getPrice()));
 //            }
-//        }
+        }
 
         document.add(table);
         document.close();
