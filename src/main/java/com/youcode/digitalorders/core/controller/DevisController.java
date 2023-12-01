@@ -21,7 +21,6 @@ public class DevisController {
 
     @GetMapping()
     public ResponseEntity<List<Devis>> getAllEquipments() {
-
-        return ResponseEntity.ok(devisService.selectAll());
+        return ResponseEntity.ok(devisService.getAllDevis());
     }
 }
