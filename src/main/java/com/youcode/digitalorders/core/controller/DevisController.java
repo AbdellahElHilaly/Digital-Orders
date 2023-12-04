@@ -2,25 +2,32 @@ package com.youcode.digitalorders.core.controller;
 
 import com.youcode.digitalorders.core.dao.model.entity.Devis;
 import com.youcode.digitalorders.core.service.DevisService;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static com.youcode.digitalorders.shared.Const.AppEndpoints.DEVIS_ENDPOINT;
 
 @RestController
 @RequestMapping(DEVIS_ENDPOINT)
 @AllArgsConstructor(onConstructor = @__(@Autowired))
-
 public class DevisController {
 
     private final DevisService devisService;
 
     @GetMapping()
-    public ResponseEntity<List<Devis>> getAllEquipments() {
+    public ResponseEntity<List<Devis>> getAllDevis() {
         return ResponseEntity.ok(devisService.getAllDevis());
+    }
+
+    @PostMapping()
+    public ResponseEntity<Map<String, Object>> createDevi(@RequestBody @Valid Devis devi) {
+        return  devisService.createDevi(devi);
     }
 }
