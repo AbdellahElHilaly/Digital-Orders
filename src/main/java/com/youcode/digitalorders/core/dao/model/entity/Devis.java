@@ -16,10 +16,7 @@
         @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)
         private Long id;
-
-        // @ManyToOne
-        // @JoinColumn(name = "demand_id")
-        // private Demand demand;
+        
         private String description;
         private String status;
 
