@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import static com.youcode.digitalorders.shared.Const.AppEndpoints.DEVIS_ENDPOINT;
 
@@ -29,5 +30,9 @@ public class DevisController {
     @PostMapping()
     public ResponseEntity<Map<String, Object>> createDevi(@RequestBody @Valid Devis devi) {
         return  devisService.createDevi(devi);
+    }
+    @PostMapping("accept-devi/{id}")
+    public ResponseEntity<Map<String, Object>> acceptDevi(@PathVariable Long id) {
+        return devisService.acceptDevi(id);
     }
 }
