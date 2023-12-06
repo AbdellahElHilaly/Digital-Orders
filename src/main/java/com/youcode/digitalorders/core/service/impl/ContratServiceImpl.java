@@ -36,10 +36,16 @@ public class ContratServiceImpl implements ContratService {
 
     @Override
     public Contrat addContrat(Contrat contrat) {
+        Devis validatedDevis = validateDevis(contrat.getDevis().getId());
 
-        validateDevis(contrat.getDevis().getId());
+        // Set the validated Devis to the Contrat
+        contrat.setDevis(validatedDevis);
+
+        // You can use validatedDevis as needed, for example, logging or further processing.
+
         return contratRepository.save(contrat);
     }
+
 
     @Override
     public Contrat getContratById(Long id) {
@@ -52,18 +58,19 @@ public class ContratServiceImpl implements ContratService {
     }
 
 
-    private void validateDevis(Long devisId) {
+    private Devis validateDevis(Long devisId) {
         Optional<Devis> optionalDevis = devisRepository.findById(devisId);
 
         if (optionalDevis.isEmpty()) {
             throw new IllegalArgumentException("Devis with ID " + devisId + " not found.");
         }
-
         Devis devis = optionalDevis.get();
 
         if (!"accepted".equalsIgnoreCase(devis.getStatus())) {
             throw new IllegalArgumentException("Devis with ID " + devisId + " is not confirmed.");
         }
+
+        return devis;
     }
 
 
