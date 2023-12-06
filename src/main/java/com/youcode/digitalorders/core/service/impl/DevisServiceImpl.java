@@ -2,6 +2,7 @@ package com.youcode.digitalorders.core.service.impl;
 
 import com.youcode.digitalorders.core.dao.model.entity.Demand;
 import com.youcode.digitalorders.core.dao.model.entity.Devis;
+import com.youcode.digitalorders.core.dao.model.entity.Equipment;
 import com.youcode.digitalorders.core.dao.repository.DemandRepository;
 import com.youcode.digitalorders.core.dao.repository.DevisRepository;
 import com.youcode.digitalorders.core.service.DevisService;
@@ -14,6 +15,7 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @Service
 public class DevisServiceImpl implements DevisService {
@@ -40,9 +42,11 @@ public class DevisServiceImpl implements DevisService {
 
         if (demandToFind != null) {
             if (demandToFind.getStatus().equals("ACCEPTED")) {
-                response.put("status", "succ");
+                devi.setStatus("PENDING");
+                Devis deviToAdd = devisRepository.save(devi);
+                response.put("status", "success");
                 response.put("message", "devi add successfully");
-                response.put("devi", demandToFind);
+                response.put("devi", deviToAdd);
                 return ResponseEntity.ok(response);
             } else {
                 response.put("status", "exception");
@@ -54,6 +58,34 @@ public class DevisServiceImpl implements DevisService {
         response.put("message", "Please check your demand information!");
         return ResponseEntity.badRequest().body(response);
 
+    }
+
+    @Override
+    public ResponseEntity<Map<String,Object>> acceptDevi(Long id) {
+        Optional<Devis> optionalDevis = devisRepository.findById(id);
+        Map<String, Object> response = new HashMap<>();
+
+        if (optionalDevis.isPresent()) {
+            Devis existingDevi = optionalDevis.get();
+            if (existingDevi.getStatus().equals("ACCEPTED")) {
+                response.put("status", "error");
+                response.put("message", "This Devi accepted!");
+            } else {
+                existingDevi.setStatus("ACCEPTED");
+                Devis savedEntity = devisRepository.save(existingDevi);
+
+                response.put("status", "success");
+                response.put("message", "Devi Accepted successfully");
+                response.put("devi", existingDevi);
+            }
+
+            return ResponseEntity.ok(response);
+
+        } else {
+            response.put("status", "error");
+            response.put("message", "Devi not fond, Please check your demand devi!");
+            return ResponseEntity.badRequest().body(response);
+        }
     }
 
     @Override
