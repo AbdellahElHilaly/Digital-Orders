@@ -69,7 +69,7 @@ public class DevisServiceImpl implements DevisService {
             Devis existingDevi = optionalDevis.get();
             if (existingDevi.getStatus().equals("ACCEPTED")) {
                 response.put("status", "error");
-                response.put("message", "This Devi accepted!");
+                response.put("message", "This Devi Already accepted!");
             } else {
                 existingDevi.setStatus("ACCEPTED");
                 Devis savedEntity = devisRepository.save(existingDevi);
@@ -83,7 +83,34 @@ public class DevisServiceImpl implements DevisService {
 
         } else {
             response.put("status", "error");
-            response.put("message", "Devi not fond, Please check your demand devi!");
+            response.put("message", "Devi not fond, Please check your devi id!");
+            return ResponseEntity.badRequest().body(response);
+        }
+    }
+    @Override
+    public ResponseEntity<Map<String,Object>> rejectDevi(Long id) {
+        Optional<Devis> optionalDevis = devisRepository.findById(id);
+        Map<String, Object> response = new HashMap<>();
+
+        if (optionalDevis.isPresent()) {
+            Devis existingDevi = optionalDevis.get();
+            if (existingDevi.getStatus().equals("REJECTED")) {
+                response.put("status", "error");
+                response.put("message", "This Devi Already Rejected!");
+            } else {
+                existingDevi.setStatus("REJECTED");
+                devisRepository.save(existingDevi);
+
+                response.put("status", "success");
+                response.put("message", "Devi Rejected successfully");
+                response.put("devi", existingDevi);
+            }
+
+            return ResponseEntity.ok(response);
+
+        } else {
+            response.put("status", "error");
+            response.put("message", "Devi not fond, Please check your devi id!");
             return ResponseEntity.badRequest().body(response);
         }
     }

@@ -13,6 +13,7 @@ public interface DevisService {
     public List<Devis> getAllDevis();
     public ResponseEntity<Map<String,Object>> createDevi(Devis devi);
     public ResponseEntity<Map<String,Object>> acceptDevi(Long id);
+    public ResponseEntity<Map<String,Object>> rejectDevi(Long id);
     public Devis getDevisById(Long id);
     public Devis findByIdOrThrow(Long id);
 }

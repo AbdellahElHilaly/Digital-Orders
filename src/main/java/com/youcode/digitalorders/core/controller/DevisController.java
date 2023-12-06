@@ -35,4 +35,8 @@ public class DevisController {
     public ResponseEntity<Map<String, Object>> acceptDevi(@PathVariable Long id) {
         return devisService.acceptDevi(id);
     }
+    @PostMapping("reject-devi/{id}")
+    public ResponseEntity<Map<String, Object>> rejectDevi(@PathVariable Long id) {
+        return devisService.rejectDevi(id);
+    }
 }
