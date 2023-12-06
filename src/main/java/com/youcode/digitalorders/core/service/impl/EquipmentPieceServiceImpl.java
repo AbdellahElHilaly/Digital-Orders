@@ -45,6 +45,7 @@ public class EquipmentPieceServiceImpl implements EquipmentPieceService {
 
     @Override
     public Optional<EquipmentPiece> findPiecesByEquipmentId(Long equipmentId) {
+
         return Optional.of(equipmentPieceRepository.findById(equipmentId)).orElseThrow(() -> new EntityNotFoundException("Equipment not found"));
     }
 

@@ -69,6 +69,7 @@ public class EquipmentController {
             Equipment savedEquipment = equipmentService.addEquipment(equipment);
             //if
             equipmentPieceService.createPieces(equipment.getId() , price );
+            equipmentPieceService.createPieces(equipment.getId() , price );
             return ResponseEntity.ok(savedEquipment);
 
         } catch (Exception e) {

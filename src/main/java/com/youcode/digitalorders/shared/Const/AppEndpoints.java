@@ -11,5 +11,6 @@ public class AppEndpoints {
     public static final  String Contrat_ENDPOINT = VERSION + "/contrats";
     public static final  String DEMAND_ENDPOINT = VERSION + "/demands";
     public static final  String FIREBASE_ENDPOINT = VERSION + "/firebase";
+    public static final  String DEVIS_ENDPOINT = VERSION + "/devis";
 
 }

@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @AllArgsConstructor
@@ -32,9 +33,8 @@ public class EquipmentServiceImpl implements EquipmentService {
         Optional<Equipment> existingEquipment = equipmentRepository.findByName(equipment.getName());
 
         if (existingEquipment.isPresent()) {
-            // Equipment with the same name exists, return null or handle the situation
-
-            return null;
+            // Equipment with the same name exists, return null or handle the situatio
+            throw new NoSuchElementException("Equipment with the same name is already exists ");
         } else {
             try {
                 // Save the equipment since it doesn't exist

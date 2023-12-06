@@ -4,7 +4,9 @@ import com.youcode.digitalorders.core.dao.model.entity.Devis;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+import java.util.UUID;
+
 @Repository
-public interface DevisRepository extends JpaRepository<Devis, Long>
-{
+public interface DevisRepository extends JpaRepository<Devis, Long> {
 }

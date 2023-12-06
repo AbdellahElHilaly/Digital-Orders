@@ -3,6 +3,8 @@ target/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
+*.properties
+src\main\resources\db\changelog\db.changelog-master.xml
 
 ### STS ###
 .apt_generated
