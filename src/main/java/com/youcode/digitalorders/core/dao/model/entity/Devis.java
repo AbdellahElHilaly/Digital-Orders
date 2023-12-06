@@ -1,5 +1,6 @@
     package com.youcode.digitalorders.core.dao.model.entity;
 
+    import com.fasterxml.jackson.annotation.JsonIgnore;
     import jakarta.persistence.*;
     import lombok.*;
 
@@ -18,8 +19,9 @@
         private Long id;
         
         private String description;
-        private String status;
+        private String status = "PENDING";
 
+        @JsonIgnore
         @ManyToOne
         @JoinColumn(name = "demand_id")
         private Demand demand;
