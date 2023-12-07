@@ -27,7 +27,6 @@ public class FilesStoreController {
     }
 
 
-
     @PostMapping("/images/upload")
     public Object upload(@RequestParam("file") MultipartFile multipartFile) {
         logger.info("HIT -/upload | File Name : {}", multipartFile.getOriginalFilename());

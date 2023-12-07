@@ -28,7 +28,6 @@ import java.util.stream.Collectors;
 public class GlobalExceptionHandler {
 
     private final ErrorResponse errorResponse;
-
     private final ErrorSimpleResponse errorSimpleResponse;
 
     private  final Logger logger = LoggerFactory.getLogger(GlobalExceptionHandler.class);
@@ -73,7 +72,6 @@ public class GlobalExceptionHandler {
         errorSimpleResponse.setMessage("Data Integrity Violation");
         errorSimpleResponse.setDetails(Arrays.asList(exception.getMessage().split(";")));
         errorSimpleResponse.setPath(request.getRequestURI());
-
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorSimpleResponse);
     }
 

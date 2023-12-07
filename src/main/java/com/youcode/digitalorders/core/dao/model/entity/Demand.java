@@ -42,8 +42,6 @@ public class Demand {
     @JoinColumn(name = "equipment_id")
     private Equipment equipment;
 
-
-
     @OneToMany
     @JoinTable(name = "demande_devis_list",
             joinColumns = @JoinColumn(name = "demand_id"),
@@ -57,7 +55,6 @@ public class Demand {
                 .endDate(endDate)
                 .userId(user.getId())
                 .quantity(quantity)
-//                .equipmentPieceId(equipmentPiece.getId())
                 .equipmentId(equipment.getId())
                 .build();
     }

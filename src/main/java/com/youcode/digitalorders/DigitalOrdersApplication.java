@@ -14,14 +14,13 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class DigitalOrdersApplication {
 
 	public static void main(String[] args) {
-
 		SpringApplication.run(DigitalOrdersApplication.class, args);
-
-
 	}
+
 	@Bean
 	public RestTemplate restTemplate() {
 		return new RestTemplate();
 	}
 
 }
+
