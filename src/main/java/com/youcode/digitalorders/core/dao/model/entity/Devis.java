@@ -21,7 +21,6 @@
         private String description;
         private String status = "PENDING";
 
-        @JsonIgnore
         @ManyToOne
         @JoinColumn(name = "demand_id")
         @JsonIgnore

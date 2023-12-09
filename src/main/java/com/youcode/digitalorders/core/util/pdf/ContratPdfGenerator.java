@@ -1,85 +1,78 @@
 package com.youcode.digitalorders.core.util.pdf;
 
 import com.lowagie.text.*;
-import com.lowagie.text.Font;
-import com.lowagie.text.Image;
-import com.lowagie.text.pdf.CMYKColor;
-import com.lowagie.text.pdf.PdfPCell;
-import com.lowagie.text.pdf.PdfPTable;
-import com.lowagie.text.pdf.PdfWriter;
-import com.youcode.digitalorders.core.dao.model.entity.*;
+import com.lowagie.text.pdf.*;
+import com.youcode.digitalorders.core.dao.model.entity.Contrat;
+import com.youcode.digitalorders.core.dao.model.entity.Demand;
+import com.youcode.digitalorders.core.dao.model.entity.Equipment;
+import com.youcode.digitalorders.core.dao.model.entity.User;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
-import java.util.List;
+import java.text.SimpleDateFormat;
 
 @Component
 public class ContratPdfGenerator {
 
+    private PdfWriter writer;
+
     public void generate(Contrat contrat, HttpServletResponse response) throws DocumentException, IOException {
         Document document = new Document(PageSize.A4);
-        PdfWriter.getInstance(document, response.getOutputStream());
+        writer = PdfWriter.getInstance(document, response.getOutputStream());
         document.open();
 
-        Font titleFont = FontFactory.getFont(FontFactory.TIMES_ROMAN, 20);
-        titleFont.setSize(20);
-        Paragraph title = new Paragraph("List of Contracts", titleFont);
+        // Increase title font size
+        Font titleFont = FontFactory.getFont(FontFactory.TIMES_ROMAN, 60);
+        Paragraph title = new Paragraph("Contract", titleFont);
         title.setAlignment(Paragraph.ALIGN_CENTER);
         document.add(title);
 
-        // Add header with image
-//        addHeader(document);
-
-        // Add a space after the header
+        // Add space after the header
         document.add(new Paragraph(" "));
 
         // Add rules of renting equipment
         addRules(document);
 
-        // Add a space after the rules
+        // Add space after the rules
         document.add(new Paragraph(" "));
 
-        PdfPTable table = new PdfPTable(5);
-        table.setWidthPercentage(100f);
-        table.setWidths(new int[]{2, 3, 3, 3, 3});
-        table.setSpacingBefore(10);
-
-        PdfPCell cell = new PdfPCell();
-        cell.setBackgroundColor(CMYKColor.LIGHT_GRAY);
-        cell.setPadding(5);
-
-        Font headerFont = FontFactory.getFont(FontFactory.TIMES_ROMAN);
-        headerFont.setColor(CMYKColor.WHITE);
-
-        cell.setPhrase(new Phrase("User Name", headerFont));
-        table.addCell(cell);
-        cell.setPhrase(new Phrase("Contract ID", headerFont));
-        table.addCell(cell);
-        cell.setPhrase(new Phrase("Equipment UUID", headerFont));
-        table.addCell(cell);
-        cell.setPhrase(new Phrase("Equipment Name", headerFont));
-        table.addCell(cell);
-        cell.setPhrase(new Phrase("Price", headerFont));
-        table.addCell(cell);
-
-        // Add contract details
+        // Add contract details in a vertical table
+        PdfPTable detailsTable = new PdfPTable(2);
+        detailsTable.setWidthPercentage(100);
+        detailsTable.setHorizontalAlignment(Element.ALIGN_LEFT);
 
         User user = contrat.getDevis().getDemand().getUser();
         Demand demandDetail = contrat.getDevis().getDemand();
-        Equipment equipmentPiece = demandDetail.getEquipment();
+        Equipment equipment = demandDetail.getEquipment();
 
-        table.addCell(String.valueOf(contrat.getId()));
-        table.addCell(user.getName());
-        table.addCell(equipmentPiece.getId().toString());
-        table.addCell(equipmentPiece.getName());
-        table.addCell(String.valueOf(equipmentPiece.getPrice()));
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 
+        // Add headers and values vertically
+        detailsTable.addCell(createHeaderCell("User Name"));
+        detailsTable.addCell(createValueCell(user.getName()));
 
-        // Add a space after the table
+        detailsTable.addCell(createHeaderCell("User Email"));
+        detailsTable.addCell(createValueCell(user.getEmail()));
+
+        detailsTable.addCell(createHeaderCell("Equipment Name"));
+        detailsTable.addCell(createValueCell(equipment.getName()));
+
+        detailsTable.addCell(createHeaderCell("Reservation S. date"));
+        detailsTable.addCell(createValueCell(dateFormat.format(demandDetail.getStartDate())));
+
+        detailsTable.addCell(createHeaderCell("Reservation End date"));
+        detailsTable.addCell(createValueCell(dateFormat.format(demandDetail.getEndDate())));
+
+        detailsTable.addCell(createHeaderCell("Price en DH"));
+        detailsTable.addCell(createValueCell(String.valueOf(equipment.getPrice())));
+
+        document.add(detailsTable);
+
+        // Add space after the table
         document.add(new Paragraph(" "));
-
-        document.add(table);
+        document.add(new Paragraph(" "));
+        document.add(new Paragraph(" "));
 
         // Add signature section
         addSignature(document);
@@ -87,27 +80,47 @@ public class ContratPdfGenerator {
         document.close();
     }
 
-//    private void addHeader(Document document) throws DocumentException, IOException {
-//        PdfPTable headerTable = new PdfPTable(1);
-//        headerTable.setWidthPercentage(100f);
-//
-//        Image logo = Image.getInstance("src/main/resources/image/70221c42a8366ee389eba2f83d7c4fa3.jpg"); // Replace with the path to your logo
-//        PdfPCell logoCell = new PdfPCell(logo, true);
-//        logoCell.setHorizontalAlignment(Element.ALIGN_CENTER);
-//        logoCell.setBorder(Rectangle.NO_BORDER);
-//
-//        headerTable.addCell(logoCell);
-//
-//        document.add(headerTable);
-//    }
+    private PdfPCell createHeaderCell(String header) {
+        PdfPCell cell = new PdfPCell();
+        cell.setBackgroundColor(CMYKColor.WHITE);
+        cell.setPadding(8);
+        cell.setHorizontalAlignment(Element.ALIGN_LEFT);
+
+        Font headerFont = FontFactory.getFont(FontFactory.COURIER_BOLD);
+        headerFont.setSize(12);
+        headerFont.setColor(CMYKColor.BLACK);
+
+        cell.addElement(new Phrase(header, headerFont));
+
+        return cell;
+    }
+
+    private PdfPCell createValueCell(String value) {
+        PdfPCell cell = new PdfPCell();
+        cell.setPadding(8);
+        cell.setHorizontalAlignment(Element.ALIGN_LEFT);
+
+        Font valueFont = FontFactory.getFont(FontFactory.TIMES_ROMAN);
+        valueFont.setSize(12);
+        valueFont.setColor(CMYKColor.BLACK);
+
+        cell.addElement(new Phrase(value, valueFont));
+
+        return cell;
+    }
 
     private void addRules(Document document) throws DocumentException {
         Paragraph rulesParagraph = new Paragraph();
         rulesParagraph.setAlignment(Element.ALIGN_LEFT);
 
-        Font ruleFont = FontFactory.getFont(FontFactory.TIMES_ROMAN, 12);
+        Font ruleTitle = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 20);
+        Paragraph title = new Paragraph("Rules of Renting Equipment:\n", ruleTitle);
+        rulesParagraph.add(title);
 
-        rulesParagraph.add("Rules of Renting Equipment:\n");
+        Font ruleFont = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 16);
+        // Add a space after the rules
+        document.add(new Paragraph(" "));
+
         rulesParagraph.add("1. Equipment must be used for its intended purpose.\n");
         rulesParagraph.add("2. Any damages or malfunctions must be reported immediately.\n");
         rulesParagraph.add("3. The renter is responsible for equipment maintenance.\n");
@@ -117,13 +130,14 @@ public class ContratPdfGenerator {
     }
 
     private void addSignature(Document document) throws DocumentException {
-        Paragraph signatureParagraph = new Paragraph();
-        signatureParagraph.setAlignment(Element.ALIGN_RIGHT);
+        PdfContentByte canvas = writer.getDirectContent();
 
-        Font signatureFont = FontFactory.getFont(FontFactory.TIMES_ROMAN, 12);
+        // Adjust these coordinates as needed
+        float x = document.right() - 150;
+        float y = document.bottom() + 50;
 
-        signatureParagraph.add("Signature: ________________________\n");
+        Phrase phrase = new Phrase("Signature: ...............................", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 12));
 
-        document.add(signatureParagraph);
+        ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, phrase, x, y, 0);
     }
 }
