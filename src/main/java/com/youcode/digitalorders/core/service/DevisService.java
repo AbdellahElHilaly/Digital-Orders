@@ -11,6 +11,7 @@ import java.util.Optional;
 
 public interface DevisService {
     public List<Devis> getAllDevis();
+    public List<Devis> getAcceptedDevis();
     public ResponseEntity<Map<String,Object>> createDevi(Devis devi);
     public ResponseEntity<Map<String,Object>> acceptDevi(Long id);
     public ResponseEntity<Map<String,Object>> rejectDevi(Long id);

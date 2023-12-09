@@ -16,6 +16,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class DevisServiceImpl implements DevisService {
@@ -33,6 +34,26 @@ public class DevisServiceImpl implements DevisService {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No devis found");
         }
         return devisList;
+    }
+
+    @Override
+    public List<Devis> getAcceptedDevis() {
+        List<Devis> devisList = devisRepository.findAll();
+
+        if (devisList.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No devis found");
+        }
+
+        // Filter the list to include only accepted devis
+        List<Devis> acceptedDevisList = devisList.stream()
+                .filter(devis -> devis.getStatus().equals("accepted"))
+                .collect(Collectors.toList());
+
+        if (acceptedDevisList.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No accepted devis found");
+        }
+
+        return acceptedDevisList;
     }
 
     @Override

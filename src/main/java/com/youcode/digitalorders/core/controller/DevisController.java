@@ -27,6 +27,11 @@ public class DevisController {
         return ResponseEntity.ok(devisService.getAllDevis());
     }
 
+    @GetMapping("accepted-devis")
+    public ResponseEntity<List<Devis>> getAcceptedDevis() {
+        return ResponseEntity.ok(devisService.getAcceptedDevis());
+    }
+
     @PostMapping()
     public ResponseEntity<Map<String, Object>> createDevi(@RequestBody @Valid Devis devi) {
         return  devisService.createDevi(devi);
@@ -39,4 +44,5 @@ public class DevisController {
     public ResponseEntity<Map<String, Object>> rejectDevi(@PathVariable Long id) {
         return devisService.rejectDevi(id);
     }
+
 }
