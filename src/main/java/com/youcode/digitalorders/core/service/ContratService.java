@@ -7,7 +7,7 @@ import java.util.List;
 public interface ContratService {
 
     public List<Contrat> getAllContrats();
-    public Contrat addContrat(Contrat contrat);
+    public Contrat addContrat(Long id);
     public Contrat getContratById(Long id);
     public Contrat findByIdOrThrow(Long id);
 }

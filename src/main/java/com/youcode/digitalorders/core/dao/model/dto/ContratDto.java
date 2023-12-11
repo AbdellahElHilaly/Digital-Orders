@@ -7,16 +7,17 @@ import com.youcode.digitalorders.core.dao.model.entity.Devis;
 import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
 
 @Builder
-@Data
+@Getter
+@Setter
 
 public class ContratDto {
-
-
-    @NotNull(message = "devis Id cannot be null")
+    @NotNull(message = "devisId cannot be null")
     private Long devisId;
 
     @JsonCreator
@@ -31,6 +32,4 @@ public class ContratDto {
                 .devis(Devis.builder().id(devisId).build())
                 .build();
     }
-
 }
-

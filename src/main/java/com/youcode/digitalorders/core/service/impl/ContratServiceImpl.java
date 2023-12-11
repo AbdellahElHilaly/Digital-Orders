@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -34,16 +35,17 @@ public class ContratServiceImpl implements ContratService {
         return contratList;
     }
 
-    @Override
-    public Contrat addContrat(Contrat contrat) {
-        Devis validatedDevis = validateDevis(contrat.getDevis().getId());
+    public Contrat addContrat(Long devisId) {
+        Devis devis = devisRepository.findById(devisId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,"Devis not found with id: " + devisId));
 
-        // Set the validated Devis to the Contrat
-        contrat.setDevis(validatedDevis);
+        Contrat newContrat = Contrat.builder()
+                .accepted_at(LocalDateTime.now())
+                .status("accepted")
+                .devis(devis)
+                .build();
 
-        // You can use validatedDevis as needed, for example, logging or further processing.
-
-        return contratRepository.save(contrat);
+        return contratRepository.save(newContrat);
     }
 
 
