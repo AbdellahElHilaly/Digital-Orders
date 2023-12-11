@@ -30,11 +30,24 @@ public class ContratController {
         return ResponseEntity.ok(contratService.getAllContrats());
     }
 
-    @PostMapping
-    public Contrat addContrat(@RequestBody @Valid ContratDto contratDto,
-                              HttpServletResponse response) {
-        Contrat newContrat = contratService.addContrat(contratDto.toEntity());
-        
+//    @PostMapping
+//    public Contrat addContrat(@RequestBody @Valid ContratDto contratDto,
+//                              HttpServletResponse response) {
+//        Contrat newContrat = contratService.addContrat(contratDto.toEntity());
+//
+//        try {
+//            contratPdfGenerator.generate(newContrat, response);
+//        } catch (DocumentException | IOException e) {
+//            e.printStackTrace();
+//        }
+//
+//        return newContrat;
+//    }
+
+    @GetMapping("/{devisId}")
+    public Contrat addContrat(@PathVariable Long devisId, HttpServletResponse response) {
+        Contrat newContrat = contratService.addContrat(devisId);
+
         try {
             contratPdfGenerator.generate(newContrat, response);
         } catch (DocumentException | IOException e) {
