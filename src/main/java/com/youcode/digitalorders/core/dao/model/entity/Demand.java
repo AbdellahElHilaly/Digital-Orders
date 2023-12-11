@@ -44,7 +44,10 @@ public class Demand {
 
 
 
-    @OneToMany(mappedBy = "demand")
+    @OneToMany
+    @JoinTable(name = "demande_devis_list",
+            joinColumns = @JoinColumn(name = "demand_id"),
+            inverseJoinColumns = @JoinColumn(name = "devis_list_id"))
     @ToString.Exclude
     private List<Devis> devisList;
 
@@ -54,7 +57,6 @@ public class Demand {
                 .endDate(endDate)
                 .userId(user.getId())
                 .quantity(quantity)
-//                .equipmentPieceId(equipmentPiece.getId())
                 .equipmentId(equipment.getId())
                 .build();
     }

@@ -15,7 +15,4 @@ public class ErrorResponse {
     private  String path;
     private  Map<String, List<String>> details;
 
-
-
-
 }

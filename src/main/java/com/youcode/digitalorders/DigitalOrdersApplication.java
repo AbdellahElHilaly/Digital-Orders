@@ -11,17 +11,18 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
 @ComponentScan(basePackages = {"com.youcode.digitalorders", "external.services.firebase"})
+//add angular cors
+
 public class DigitalOrdersApplication {
 
 	public static void main(String[] args) {
-
 		SpringApplication.run(DigitalOrdersApplication.class, args);
-
-
 	}
+
 	@Bean
 	public RestTemplate restTemplate() {
 		return new RestTemplate();
 	}
 
 }
+
